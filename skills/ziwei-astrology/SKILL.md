@@ -23,6 +23,52 @@ description: >
 
 ## 工作流
 
+### Step 0：检索学习仓库（每次排盘前必做）
+
+在排盘解盘之前，必须先检索学习两个仓库的关键代码和知识库，确保解读基于最新最准确的内容。
+
+**检索 iztro 仓库**（排盘算法）：
+```
+1. 克隆或浏览 https://github.com/SylarLong/iztro
+2. 重点阅读以下文件：
+   - src/astro/astro.ts          — 排盘入口与主流程
+   - src/astro/palace.ts         — 命身宫、五行局、大限计算
+   - src/star/majorStar.ts       — 十四主星安法
+   - src/star/minorStar.ts       — 辅星安法
+   - src/star/adjectiveStar.ts   — 杂耀安法
+   - src/star/location.ts        — 各星位置计算
+   - src/star/horoscopeStar.ts   — 长生12神、博士12神、流年诸星
+   - src/data/heavenlyStems.ts   — 天干四化定义
+   - src/data/earthlyBranches.ts — 地支数据（命主身主等）
+   - src/data/stars.ts           — 星耀亮度表
+   - src/astro/FunctionalAstrolabe.ts  — 星盘功能方法
+   - src/astro/FunctionalPalace.ts     — 宫位功能方法（飞化等）
+   - src/astro/FunctionalHoroscope.ts  — 运限功能方法
+3. 理解排盘算法的完整流程和边界条件
+```
+
+**检索 ziwei-doushu 仓库**（解读知识库）：
+```
+1. 克隆或浏览 https://github.com/Renhuai123/ziwei-doushu
+2. 重点阅读以下文件：
+   - lib/ziwei/algorithm.ts          — 排盘流程（基于iztro封装）
+   - lib/ziwei/patterns.ts           — 1100+行格局识别规则（核心！）
+   - lib/ziwei/sihua.ts              — 四化系统与宫干自化
+   - lib/ziwei/heming-knowledge.ts   — 倪海厦合盘与夫妻宫断语（核心！）
+   - lib/ziwei/constants.ts          — 常量与星耀描述
+   - lib/ziwei/types.ts              — 类型定义
+   - lib/classics/gusuifu.ts         — 骨髓赋古籍原文
+   - lib/classics/quanji.ts          — 紫微斗数全集
+   - lib/classics/quanshu.ts         — 紫微斗数全书
+3. 特别关注倪师体系的独特立场：
+   - "四化星永远固定不动"（不使用大限四化）
+   - 不主张飞星派宫干自化论
+   - 亮度用三级制：bright/normal/dim
+   - 格局判断用三层结构：必须/加分/破格
+```
+
+**冲突处理**：若两仓库对同一规则有不同定义，以 ziwei-doushu 为准。
+
 ### Step 1：收集输入
 
 从用户消息中提取：
@@ -66,7 +112,7 @@ const result = astro.bySolar('YYYY-M-D', hourIndex, gender, true, 'zh-CN');
 | `references/time-mapping.md` | 确认时辰索引 |
 | `references/star-rules.md` | 安星规则与亮度表 |
 | `references/sihua-rules.md` | 四化对照表与飞化规则 |
-| `references/patterns.md` | 格局识别规则（1100+行） |
+| `references/patterns.md` | 格局识别规则 |
 | `references/palace-interpretation.md` | 十二宫解读规则 |
 | `references/heming-knowledge.md` | 倪海厦合盘与夫妻宫断语 |
 | `references/report-template.md` | 完整报告输出模板 |
@@ -74,6 +120,7 @@ const result = astro.bySolar('YYYY-M-D', hourIndex, gender, true, 'zh-CN');
 ## ⚠️ Gotchas
 
 - **不要手动排盘**：所有计算必须通过 iztro 代码执行，手动推算容易出错
+- **必须先检索仓库**：Step 0 不可跳过，每次排盘前必须检索学习两个仓库的关键文件
 - **倪师体系优先**：ziwei-doushu 仓库明确标注"倪师不主张飞星派宫干自化论"，大限四化在倪师体系中不使用
 - **亮度三级制**：ziwei-doushu 使用 bright/normal/dim 三级（对应庙旺/平/陷），与 iztro 的七级不同，解读时以三级为主
 - **空宫必须借对宫**：宫位无主星时，借对宫主星论断，力量减半
